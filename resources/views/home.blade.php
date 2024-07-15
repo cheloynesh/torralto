@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="description" content="Sistema ELAN">
+    <meta name="description" content="Sistema Torralto">
     <link rel="icon" href="{{ URL::asset('img/logo.ico') }}">
-    {{-- <title>@yield('title','Sistema') | ELAN</title> --}}
+    {{-- <title>@yield('title','Sistema') | Torralto</title> --}}
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Fonts -->
@@ -103,7 +103,7 @@
 
 </head>
 <head>
-    <title>Home | Elan</title>
+    <title>Home | Torralto</title>
 </head>
 <body>
     @include('admin.template.nav')

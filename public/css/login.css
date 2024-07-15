@@ -5,7 +5,7 @@ body {
 
 .card-header{
 text-align: center;
-background: #4a7198 !important;
+background: #12284c !important;
 }
 
 .brand-wrapper {
@@ -99,21 +99,21 @@ background: #4a7198 !important;
 
 .btn-login {
     color: #fff;
-    background-color: #4a7198;
-    border-color: #4a7198;
+    background-color: #12284c;
+    border-color: #12284c;
   }
 
   .btn-login:hover {
     color: #fff;
-    background-color: #275079;
-    border-color: #275079;
+    background-color: #293d5d;
+    border-color: #293d5d;
   }
 
   .btn-login:focus,
   .btn-login.focus {
     color: #fff;
-    background-color: #275079;
-    border-color: #275079;
+    background-color: #293d5d;
+    border-color: #293d5d;
     box-shadow: 0 0 0 0.2rem rgba(82, 161, 225, 0.5);
   }
 /*# sourceMappingURL=login.css.map */

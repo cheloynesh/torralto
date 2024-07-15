@@ -1,11 +1,11 @@
 @extends('home')
 <head>
     <title>
-        Home | Elan
+        Home | Torralto
     </title>
 </head>
 @section('content')
-    <div class="text-center"><h1>ELAN</h1></div>
+    <div class="text-center"><h1>Torralto</h1></div>
     <div style="max-width: 100%; margin: auto;">
         {{-- modal| --}}
         {{-- fin modal| --}}

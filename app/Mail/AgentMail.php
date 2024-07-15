@@ -41,6 +41,6 @@ class AgentMail extends Mailable
         $today = new DateTime();
         $bdays = DB::select('call bdayMail(?,?)',[$today->format('m'), $today->format('d')]);
 
-        return $this->subject('Correo informativo ELAN')->view('mail.agentmail', compact('idview','bdays'));
+        return $this->subject('Correo informativo Torralto')->view('mail.agentmail', compact('idview','bdays'));
     }
 }

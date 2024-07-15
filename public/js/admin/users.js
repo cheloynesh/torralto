@@ -73,6 +73,7 @@ function guardarUsuario()
     var b_day = $("#b_day").val();
     var fk_profile = $("#selectProfile").val();
     var subProfile = $("#selectSubProfile").val();
+
     var route = "user";
     var data = {
         "_token": $("meta[name='csrf-token']").attr("content"),
@@ -84,8 +85,7 @@ function guardarUsuario()
         'cellphone':cellphone,
         'fk_profile':fk_profile,
         'subProfile':subProfile,
-        'b_day':b_day,
-        'codes':codigos
+        'b_day':b_day
     };
 
     jQuery.ajax({
@@ -97,7 +97,6 @@ function guardarUsuario()
         {
             alertify.success(result.message);
             $("#myModal").modal('hide');
-            codigos=[];
             window.location.reload(true);
         }
     })
@@ -125,19 +124,6 @@ function editarUsuario(id)
             $("#b_day1").val(result.data.b_day);
             $("#selectProfile1").val(result.data.fk_profile);
             $("#selectSubProfileedit").val(result.data.subprofile);
-            // codigos
-
-            codigoseditar=[];
-
-            result.codes.forEach( function(valor, indice, array) {
-                codigoseditar.push({
-                    'code':valor.code,
-                    'insurance':valor.fk_insurance,
-                    'insuranceName':valor.name
-                });
-            });
-            refreshTable('#tbcodes1',codigoseditar,'delete_code_edit');
-            showimpEdit();
             $("#myModaledit").modal('show');
         }
     })
@@ -146,7 +132,6 @@ function editarUsuario(id)
 function cancelarUsuario()
 {
     // $("#tbody-codigo1").empty();
-    codigoseditar=[];
     $("#myModaledit").modal('hide');
 
 }
@@ -175,10 +160,8 @@ function actualizarUsuario()
         'cellphone':cellphone,
         'fk_profile':fk_profile,
         'subprofile':subProfile,
-        'b_day':b_day,
-        'codigoseditar':codigoseditar
+        'b_day':b_day
     };
-    console.log(codigoseditar);
     jQuery.ajax({
         url:route,
         type:'put',
@@ -189,7 +172,6 @@ function actualizarUsuario()
             // $("#tbody-codigo1").empty();
             alertify.success(result.message);
             $("#myModaledit").modal('hide');
-            codigoseditar=[];
             window.location.reload(true);
         }
     })
@@ -219,125 +201,3 @@ function eliminarUsuario(id)
             alertify.error('Cancelado');
     });
 }
-// codigos agentes
-function showimp()
-{
-   var get_value = document.getElementById("selectProfile");
-   var valor = get_value.value;
-//    alert(valor);
-    if(valor == "12")
-    {
-        document.getElementById("claveAgente").style.display = "block";
-
-    }
-    else
-    {
-        document.getElementById("claveAgente").style.display = "none";
-    }
-}
-var array = [];
-var codigos=[];
-var codigos=[];
-var codigoseditar=[];
-
-function refreshTable(tableName, cods, func)
-{
-    var table = $(tableName).DataTable();
-        table.clear();
-        cods.forEach( function(valor, indice, array) {
-            btnTrash = '<button type="button" class="btn btn-danger" onclick="'+func+'('+valor.code+','+valor.insurance+')"><i class="fa fa-trash mr-2"></i></button>';
-            table.row.add([valor.code,valor.insuranceName,btnTrash]);
-        });
-
-        table.draw(false);
-}
-
-function agregarcodigo()
-{
-    var codigo = $("#code").val();
-    var aseguradora = $("#insurance").val();
-    var aseguradoraName = $("#insurance option:selected").text();
-    if(codigo == null || codigo=="" || aseguradora==null || aseguradora=="")
-    {
-        alert("Los campos no deben de quedar vacios.");
-        return false;
-    }
-    else
-    {
-        $("#code").val("");
-        $("#insurance").val("");
-        codigos.push({
-            'id':array.length+1,
-            'code':codigo,
-            'insurance':aseguradora,
-            'insuranceName':aseguradoraName
-        });
-        refreshTable('#tbcodes',codigos,'delete_code');
-    }
-}
-function agregarcodigo1(codigo)
-{
-    var codigo = $("#code1").val();
-    var aseguradora = $("#insurance1").val();
-    var aseguradoraName = $("#insurance1 option:selected").text();
-    if(codigo == null || codigo=="" || aseguradora==null || aseguradora=="")
-    {
-        alert("Los campos no deben de quedar vacios.");
-        return false;
-    }
-    else
-    {
-        $("#code").val("");
-        $("#insurance").val("");
-        codigoseditar.push({
-            'id':array.length+1,
-            'code':codigo,
-            'insurance':aseguradora,
-            'insuranceName':aseguradoraName
-        });
-        refreshTable('#tbcodes1',codigoseditar,'delete_code_edit');
-    }
-}
-function delete_code(code, insurance)
-{
-    var index = 0;
-    for(var i = 0; i<codigos.length; ++i)
-    {
-        if(codigos[i].code == code && codigos[i].insurance == insurance)
-        {
-            index=i;
-        }
-    }
-    codigos.splice(index,1);
-    refreshTable('#tbcodes',codigos,'delete_code');
-}
-function delete_code_edit(code, insurance)
-{
-    var index = 0;
-    for(var i = 0; i<codigoseditar.length; ++i)
-    {
-        if(codigoseditar[i].code == code && codigoseditar[i].insurance == insurance)
-        {
-            index=i;
-        }
-    }
-    codigoseditar.splice(index,1);
-    refreshTable('#tbcodes1',codigoseditar,'delete_code_edit');
-}
-// editar codigos agentes
-function showimpEdit()
-{
-    var get_value = document.getElementById("selectProfile1");
-    var valor = get_value.value;
- //    alert(valor);
-     if(valor == "12")
-     {
-         document.getElementById("claveAgente1").style.display = "block";
-
-     }
-     else
-     {
-         document.getElementById("claveAgente1").style.display = "none";
-     }
-}
-

@@ -40,19 +40,6 @@ class ClientsController extends Controller
         $client->name = $request->name;
         $client->firstname = $request->firstname;
         $client->lastname = $request->lastname;
-        $client->birth_date = $request->birth_date;
-        $client->rfc = $request->rfc;
-        $client->curp = $request->curp;
-        $client->gender = $request->gender;
-        $client->marital_status = $request->marital_status;
-        $client->street = $request->street;
-        $client->e_num = $request->e_num;
-        $client->i_num = $request->i_num;
-        $client->pc = $request->pc;
-        $client->suburb = $request->suburb;
-        $client->country = $request->country;
-        $client->state = $request->state;
-        $client->city = $request->city;
         $client->cellphone = $request->cellphone;
         $client->email = $request->email;
         $client->name_contact = $request->name_contact;
@@ -71,19 +58,6 @@ class ClientsController extends Controller
             $client->name = $request->name;
             $client->firstname = $request->firstname;
             $client->lastname = $request->lastname;
-            $client->birth_date = $request->birth_date;
-            $client->rfc = $request->rfc;
-            $client->curp = $request->curp;
-            $client->gender = $request->gender;
-            $client->marital_status = $request->marital_status;
-            $client->street = $request->street;
-            $client->e_num = $request->e_num;
-            $client->i_num = $request->i_num;
-            $client->pc = $request->pc;
-            $client->suburb = $request->suburb;
-            $client->country = $request->country;
-            $client->state = $request->state;
-            $client->city = $request->city;
             $client->cellphone = $request->cellphone;
             $client->email = $request->email;
             $client->name_contact = $request->name_contact;
@@ -96,11 +70,7 @@ class ClientsController extends Controller
         {
             $client = Client::where('id',$request->id)
             ->update(['name'=>$request->name, 'firstname'=>$request->firstname,'lastname'=>$request->lastname,
-                'birth_date'=>$request->birth_date, 'rfc'=>$request->rfc,'curp'=>$request->curp,
-                'gender'=>$request->gender, 'marital_status'=>$request->marital_status,'street'=>$request->street,
-                'e_num'=>$request->e_num, 'i_num'=>$request->i_num,'pc'=>$request->pc,
-                'suburb'=>$request->suburb, 'country'=>$request->country,'state'=>$request->state,
-                'city'=>$request->city, 'cellphone'=>$request->cellphone,'email'=>$request->email,
+                'cellphone'=>$request->cellphone,'email'=>$request->email,
                 'name_contact'=>$request->name_contact,'phone_contact'=>$request->phone_contact]);
             return response()->json(['status'=>true, 'message'=>"Cliente Actualizado"]);
         }

@@ -32,20 +32,21 @@ class HomeController extends Controller
      */
     public function index()
     {
-        date_default_timezone_set('America/Mexico_City');
-        $today = new DateTime();
+        // date_default_timezone_set('America/Mexico_City');
+        // $today = new DateTime();
 
-        $profile = User::findProfile();
-        $perm = Permission::permView($profile,14);
-        $perm_btn =Permission::permBtns($profile,14);
-        $user = User::user_id();
+        // $profile = User::findProfile();
+        // $perm = Permission::permView($profile,14);
+        // $perm_btn =Permission::permBtns($profile,14);
+        // $user = User::user_id();
 
-        if($profile != 12)
-            $data = DB::select('call homescreen(?,?,?)',[intval($today->format('m')),$today->format('Y'),$today->format('Y-m-d')]);
-        else
-            $data = DB::select('call homescreenAg(?,?,?,?)',[intval($today->format('m')),$today->format('Y'),$today->format('Y-m-d'),$user]);
-            // dd($today->format('m'),$today->format('Y'),$today->format('Y-m-d'));
-        return view('template', compact('data'));
+        // if($profile != 12)
+        //     $data = DB::select('call homescreen(?,?,?)',[intval($today->format('m')),$today->format('Y'),$today->format('Y-m-d')]);
+        // else
+        //     $data = DB::select('call homescreenAg(?,?,?,?)',[intval($today->format('m')),$today->format('Y'),$today->format('Y-m-d'),$user]);
+        //     // dd($today->format('m'),$today->format('Y'),$today->format('Y-m-d'));
+        // return view('template', compact('data'));
+        return view('home');
     }
 
     public function GetInfo($id)

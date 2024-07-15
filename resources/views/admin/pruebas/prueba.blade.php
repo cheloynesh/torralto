@@ -250,7 +250,7 @@
                     <th class="text-center">Año</th>
                     <th class="text-center">Mes</th>
                     <th class="text-center">Fuente</th>
-                    <th class="text-center">DDN/ELAN</th>
+                    <th class="text-center">DDN/Torralto</th>
 
                     <th class="text-center">Teléfono</th>
                     <th class="text-center">RFC</th>
@@ -295,7 +295,7 @@
 
                         <td>2023</td>
                         <td>Agosto</td>
-                        <td>ELAN</td>
+                        <td>Torralto</td>
                         <td>Victor</td>
 
                         <td>3336267901</td>
@@ -339,7 +339,7 @@
 
                         <td>2023</td>
                         <td>Agosto</td>
-                        <td>ELAN</td>
+                        <td>Torralto</td>
                         <td>Victor</td>
 
                         <td>3336267901</td>
@@ -383,7 +383,7 @@
 
                         <td>2023</td>
                         <td>Agosto</td>
-                        <td>ELAN</td>
+                        <td>Torralto</td>
                         <td>Victor</td>
 
                         <td>3336267901</td>
@@ -427,7 +427,7 @@
 
                         <td>2023</td>
                         <td>Agosto</td>
-                        <td>ELAN</td>
+                        <td>Torralto</td>
                         <td>Victor</td>
 
                         <td>3336267901</td>

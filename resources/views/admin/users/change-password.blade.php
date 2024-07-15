@@ -1,6 +1,6 @@
 @extends('home')
 <head>
-    <title>Usuarios | Elan</title>
+    <title>Usuarios | Torralto</title>
 </head>
 <style>
         thead input {

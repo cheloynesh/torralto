@@ -1,6 +1,6 @@
 @extends('home')
 <head>
-    <title>Permisos | Elan</title>
+    <title>Permisos | Torralto</title>
 </head>
 @section('content')
 

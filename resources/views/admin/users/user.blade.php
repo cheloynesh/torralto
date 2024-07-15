@@ -1,6 +1,6 @@
 @extends('home')
 <head>
-    <title>Usuarios | Elan</title>
+    <title>Usuarios | Torralto</title>
 </head>
 <style>
         thead input {
@@ -78,7 +78,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="">Perfil:</label>
-                                            <select name="selectProfile" id="selectProfile" class="form-select" onchange="showimp()">
+                                            <select name="selectProfile" id="selectProfile" class="form-select">
                                                 <option hidden selected value="">Selecciona una opción</option>
                                                 @foreach ($profiles as $id => $profile)
                                                     <option value='{{ $id }}'>{{ $profile }}</option>
@@ -87,60 +87,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div id="claveAgente" style="display: none">
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label for="" id="etiqueta">Clave de Agente</label>
-                                                <input type="text" id="code" name="code" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label for="" id="etiqueta3">Compañía</label>
-                                                <select name="insurance" id="insurance" class="form-select">
-                                                    <option hidden selected value="">Selecciona una opción</option>
-                                                    @foreach ($insurances as $id => $insurance)
-                                                        <option value='{{ $id }}'>{{ $insurance }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label for="" id="etiqueta2">SubPerfil</label>
-                                                <select name="selectSubProfile" id="selectSubProfile" class="form-select" class="form-control">
-                                                    <option hidden selected value="">Selecciona una opción</option>
-                                                    <option value="1">Nuevo</option>
-                                                    <option value="2">En crecimiento</option>
-                                                    <option value="3">Consolidado</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 align-self-end">
-                                            <div class="form-group">
-                                                <button type="button" id="agregarcol" class="btn btn-primary" onclick="agregarcodigo()">Agregar</button>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    {{-- inicio tabla --}}
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
-                                                <table class="table table-striped table-hover text-center" style="width:100%" id="tbcodes">
-                                                    <thead>
-                                                        <th class="text-center">Clave de agente</th>
-                                                        <th class="text-center">Compañía</th>
-                                                        <th class="text-center">Opciones</th>
-                                                    </thead>
-                                                    <tbody id="tbody-codigo"></tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
                     </div>

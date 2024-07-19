@@ -12,7 +12,7 @@
 
                     <div class="modal-header">
                         <h4 class="modal-title" id="gridModalLabek">Preferencias</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="cancelar('#salesModal')"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="cancelar('#preferencesModal')"><span aria-hidden="true">&times;</span></button>
                     </div>
 
                     <div class="modal-body">
@@ -65,7 +65,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="">Baños Completos</label>
-                                            <select name="selectCompRest" id="selectCompRest" class="form-select">
+                                            <select name="selectCompRest" id="selectFullRest" class="form-select">
                                                 <option hidden selected value=0>Selecciona una opción</option>
                                                 <option value = 1>1</option>
                                                 <option value = 2>2</option>
@@ -99,12 +99,36 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Precio mínimo</label>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">$</div>
+                                                </div>
+                                                <input type="text" id="minPrice" name="minPrice" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" value="" data-type="currency" class="form-control" placeholder="Precio mínimo">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Precio máximo</label>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">$</div>
+                                                </div>
+                                                <input type="text" id="maxPrice" name="maxPrice" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" value="" data-type="currency" class="form-control" placeholder="Precio máximo">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" onclick="cancelar('#salesModal')" class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" onclick="guardarVentas()" class="btn btn-primary">Guardar</button>
+                        <button type="button" onclick="cancelar('#preferencesModal')" class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" onclick="savePreferences()" class="btn btn-primary">Guardar</button>
                     </div>
                 </div>
             </div>
@@ -167,6 +191,7 @@
             </table>
         </div>
     </div>
+    <script src="{{URL::asset('js/currencyformat.js')}}" ></script>
 @endsection
 @push('head')
     <script src="{{URL::asset('js/admin/client.js')}}"></script>

@@ -46,6 +46,7 @@ Route::get('admin/client/client/GetInfo/{id}','ClientsController@GetInfo')->name
 Route::post('admin/client/client/saveEnterprise', 'ClientsController@saveEnterprise')->name('client.saveEnterprise');
 Route::get('admin/client/client/GetInfoE/{id}','ClientsController@GetInfoE')->name('client.GetInfoE');
 Route::post('admin/client/client/updateEnterprise', 'ClientsController@updateEnterprise')->name('client.updateEnterprise');
+Route::post('admin/client/client/UpdatePreferences', 'ClientsController@UpdatePreferences')->name('client.UpdatePreferences');
 Route::delete('admin/client/client/destroyEnterprise/{id}','ClientsController@destroyEnterprise')->name('cliente.destroyEnterprise');
 
 // permisos

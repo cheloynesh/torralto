@@ -350,15 +350,70 @@ function guardar()
         guardarEmpresa();
     }
 }
+
+function cancelar(modal)
+{
+    $(modal).modal('hide');
+}
+
+editId = 0;
 function openPreferences(id)
 {
     editId = id;
 
-    $("#selectLevel").val(0);
-    $("#selectPark").val(0);
-    $("#selectRooms").val(0);
-    $("#selectCompRest").val(0);
-    $("#selectHalfRest").val(0);
+    var route = baseUrl + '/GetInfo/'+id;
+    // alert(idupdateE);
+    jQuery.ajax({
+        url:route,
+        type:'get',
+        dataType:'json',
+        success:function(result)
+        {
+            $("#selectLevel").val(result.data.levels);
+            $("#selectPark").val(result.data.parking);
+            $("#selectRooms").val(result.data.rooms);
+            $("#selectFullRest").val(result.data.full_rest);
+            $("#selectHalfRest").val(result.data.half_rest);
+            $("#minPrice").val(parseFloat(result.data.min_price).toLocaleString('en-US'));
+            $("#maxPrice").val(parseFloat(result.data.max_price).toLocaleString('en-US'));
 
-    $("#preferencesModal").modal('show');
+            $("#preferencesModal").modal('show');
+        }
+    })
+}
+
+function savePreferences()
+{
+    var levels = $("#selectLevel").val();
+    var parking = $("#selectPark").val();
+    var rooms = $("#selectRooms").val();
+    var full_rest = $("#selectFullRest").val();
+    var half_rest = $("#selectHalfRest").val();
+    var min_price = $("#minPrice").val().replace(/[^0-9.]/g, '');
+    var max_price = $("#maxPrice").val().replace(/[^0-9.]/g, '');
+
+    var route = baseUrl + '/UpdatePreferences';
+    // console.log(route);
+    var dataE = {
+        "_token": $("meta[name='csrf-token']").attr("content"),
+        'levels':levels,
+        'parking':parking,
+        'rooms':rooms,
+        'full_rest':full_rest,
+        'half_rest':half_rest,
+        'min_price':min_price,
+        'max_price':max_price,
+        'id':editId,
+    };
+    jQuery.ajax({
+        url:route,
+        type:'post',
+        data:dataE,
+        dataType:'json',
+        success:function(result)
+        {
+            alertify.success(result.message);
+            $("#preferencesModal").modal('hide');
+        }
+    })
 }

@@ -77,6 +77,15 @@ class ClientsController extends Controller
 
     }
 
+    public function UpdatePreferences(Request $request)
+    {
+        $client = Client::where('id',$request->id)
+        ->update(['levels'=>$request->levels, 'parking'=>$request->parking,'rooms'=>$request->rooms,
+            'full_rest'=>$request->full_rest,'half_rest'=>$request->half_rest,
+            'min_price'=>$request->min_price,'max_price'=>$request->max_price]);
+        return response()->json(['status'=>true, 'message'=>"Preferencias Actualizadas"]);
+    }
+
     public function destroy($id)
     {
         $client = Client::find($id);

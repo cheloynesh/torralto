@@ -56,3 +56,11 @@ Route::post('admin/permission/permissions/update_store','PermissionsController@u
 
 // mails
 Route::get('/mailtest','MailController@MailSender')->name('mailing.MailSender');
+
+// propiedades
+Route::resource('admin/properties/properties', 'PropertiesController');
+Route::get('admin/properties/properties/GetInfo/{id}','PropertiesController@GetInfo')->name('propertie.GetInfo');
+Route::get('admin/properties/properties/GetinfoStatus/{id}','PropertiesController@GetinfoStatus')->name('propertie.GetinfoStatus');
+Route::post('admin/properties/properties/updateStatus', 'PropertiesController@updateStatus')->name('propertie.updateStatus');
+Route::get('admin/properties/properties/GetSuburb/{id}','PropertiesController@GetSuburb')->name('propertie.GetSuburb');
+Route::get('admin/properties/properties/GetUbi/{id}','PropertiesController@GetUbi')->name('propertie.GetUbi');

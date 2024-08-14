@@ -6,7 +6,9 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
+                    <p class="centradoLogin">
                         <img src="img/logo.png" alt="logo" class="logo">
+                    </p>
                 </div>
 
                 <div class="card-body">

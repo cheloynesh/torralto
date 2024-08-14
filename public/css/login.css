@@ -116,4 +116,8 @@ background: #12284c !important;
     border-color: #293d5d;
     box-shadow: 0 0 0 0.2rem rgba(82, 161, 225, 0.5);
   }
+.centradoLogin{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 /*# sourceMappingURL=login.css.map */

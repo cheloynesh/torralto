@@ -889,6 +889,7 @@
                     <th class="text-center">Baños completos</th>
                     <th class="text-center">Estacionamientos</th>
                     <th class="text-center">Tipo</th>
+                    <th class="text-center">Estatus</th>
                     @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
                         <th class="text-center">Opciones</th>
                     @endif
@@ -903,6 +904,14 @@
                             <td>{{$propertie->half_rest}}</td>
                             <td>{{$propertie->full_rest}}</td>
                             <td>{{$propertie->parking}}</td>
+                            @switch($propertie->type)
+                                @case('house_card') <td>Casa</td> @break
+                                @case('dept_card') <td>Departamento</td> @break
+                                @case('terrain_card') <td>Terreno</td> @break
+                                @case('office_card') <td>Oficinas</td> @break
+                                @case('wareh_card') <td>Bodega</td> @break
+                                @case('local_card') <td>Local Comercial</td> @break
+                            @endswitch
                             <td>
                                 <button class="btn btn-info" style="background-color: #{{$propertie->color}}; border-color: #{{$propertie->color}}" onclick="opcionesEstatus({{$propertie->id}},{{$propertie->statId}})">{{$propertie->statName}}</button>
                             </td>

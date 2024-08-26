@@ -61,7 +61,17 @@ function RefreshTable(data,profile,permission)
         btnStat = '<button class="btn btn-info" style="background-color: #'+valor.color+'; border-color: #'+valor.color+'" onclick="opcionesEstatus('+valor.id+','+valor.statId+')">'+valor.statName+'</button>';
         btnEdit = '<button href="#|" class="btn btn-warning" onclick="editarPropiedad('+valor.id+')" ><i class="fa fa-edit"></i></button>';
         btnTrash = '<button href="#|" class="btn btn-danger" onclick="eliminarPropiedad('+valor.id+')"><i class="fa fa-trash"></i></button>';
-        // alert(valor.id);
+
+        switch(result.data.type)
+        {
+            case 'house_card': auxtype = 'H'; break;
+            case 'dept_card': auxtype = 'D'; break;
+            case 'terrain_card': auxtype = 'T'; break;
+            case 'office_card': auxtype = 'O'; break;
+            case 'wareh_card': auxtype = 'W'; break;
+            case 'local_card': auxtype = 'L'; break;
+        }
+
         if(permission["erase"] == 1)
             table.row.add([valor.name,valor.levels,valor.rooms,valor.half_rest,valor.full_rest,valor.parking,btnStat,btnEdit+" "+btnTrash]);
         else

@@ -64,3 +64,9 @@ Route::get('admin/properties/properties/GetinfoStatus/{id}','PropertiesControlle
 Route::post('admin/properties/properties/updateStatus', 'PropertiesController@updateStatus')->name('propertie.updateStatus');
 Route::get('admin/properties/properties/GetSuburb/{id}','PropertiesController@GetSuburb')->name('propertie.GetSuburb');
 Route::get('admin/properties/properties/GetUbi/{id}','PropertiesController@GetUbi')->name('propertie.GetUbi');
+
+// agenda
+Route::resource('process/agenda/agenda', 'AgendaController');
+Route::get('process/agenda/agenda/GetInfo/{id}','AgendaController@GetInfo')->name('agenda.GetInfo');
+Route::get('process/agenda/agenda/GetinfoStatus/{id}','AgendaController@GetinfoStatus')->name('agenda.GetinfoStatus');
+Route::post('process/agenda/agenda/updateStatus', 'AgendaController@updateStatus')->name('agenda.updateStatus');

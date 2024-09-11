@@ -57,25 +57,27 @@ function RefreshTable(data,profile,permission)
     var btnTrash = '';
     table.clear();
 
+    console.log(data);
+
     data.forEach( function(valor, indice, array) {
         btnStat = '<button class="btn btn-info" style="background-color: #'+valor.color+'; border-color: #'+valor.color+'" onclick="opcionesEstatus('+valor.id+','+valor.statId+')">'+valor.statName+'</button>';
         btnEdit = '<button href="#|" class="btn btn-warning" onclick="editarPropiedad('+valor.id+')" ><i class="fa fa-edit"></i></button>';
         btnTrash = '<button href="#|" class="btn btn-danger" onclick="eliminarPropiedad('+valor.id+')"><i class="fa fa-trash"></i></button>';
 
-        switch(result.data.type)
+        switch(valor.type)
         {
-            case 'house_card': auxtype = 'H'; break;
-            case 'dept_card': auxtype = 'D'; break;
-            case 'terrain_card': auxtype = 'T'; break;
-            case 'office_card': auxtype = 'O'; break;
-            case 'wareh_card': auxtype = 'W'; break;
-            case 'local_card': auxtype = 'L'; break;
+            case 'house_card': auxtype = 'Casa'; break;
+            case 'dept_card': auxtype = 'Departamento'; break;
+            case 'terrain_card': auxtype = 'Terreno'; break;
+            case 'office_card': auxtype = 'Oficina'; break;
+            case 'wareh_card': auxtype = 'Bodega'; break;
+            case 'local_card': auxtype = 'Local Comercial'; break;
         }
 
         if(permission["erase"] == 1)
-            table.row.add([valor.name,valor.levels,valor.rooms,valor.half_rest,valor.full_rest,valor.parking,btnStat,btnEdit+" "+btnTrash]);
+            table.row.add([valor.name,valor.levels,valor.rooms,valor.half_rest,valor.full_rest,valor.parking,auxtype,btnStat,btnEdit+" "+btnTrash]);
         else
-            table.row.add([valor.name,valor.levels,valor.rooms,valor.half_rest,valor.full_rest,valor.parking,btnStat,btnEdit]);
+            table.row.add([valor.name,valor.levels,valor.rooms,valor.half_rest,valor.full_rest,valor.parking,auxtype,btnStat,btnEdit]);
     });
     table.draw(false);
 }

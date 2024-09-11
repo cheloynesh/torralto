@@ -60,6 +60,35 @@ $(document).ready( function () {
     });
 } );
 
+$(document).ready( function () {
+    $('#srcClient').DataTable({
+        language : {
+            "sProcessing":     "Procesando...",
+            "sLengthMenu":     "Mostrar _MENU_ registros",
+            "sZeroRecords":    "No se encontraron resultados",
+            "sEmptyTable":     "Ningún dato disponible en esta tabla",
+            "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix":    "",
+            "sSearch":         "Buscar:",
+            "sUrl":            "",
+            "sInfoThousands":  ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+              "sFirst":    "Primero",
+              "sLast":     "Último",
+              "sNext":     "Siguiente",
+              "sPrevious": "Anterior"
+            },
+            "oAria": {
+              "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+              "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+        }
+    });
+} );
+
 // persona física
 function guardarCliente()
 {
@@ -377,6 +406,18 @@ function openPreferences(id)
             $("#minPrice").val(parseFloat(result.data.min_price).toLocaleString('en-US'));
             $("#maxPrice").val(parseFloat(result.data.max_price).toLocaleString('en-US'));
 
+            console.log(result.propertie);
+            if(result.propertie != null)
+            {
+                idPropertie = result.propertie.id;
+                $("#propertie_edit").val(result.propertie.name);
+            }
+            else
+            {
+                idPropertie = 0;
+                $("#propertie_edit").val("");
+            }
+
             $("#preferencesModal").modal('show');
         }
     })
@@ -404,6 +445,7 @@ function savePreferences()
         'min_price':min_price,
         'max_price':max_price,
         'id':editId,
+        'propertie_pref':idPropertie,
     };
     jQuery.ajax({
         url:route,
@@ -416,4 +458,19 @@ function savePreferences()
             $("#preferencesModal").modal('hide');
         }
     })
+}
+
+function abrirmodal(modal)
+{
+    $(modal).modal('show');
+}
+
+idPropertie = 0;
+function obtenerid(id, name)
+{
+    idPropertie = id;
+
+    $("#propertie_edit").val(name);
+
+    $("#modalSrcPropertie").modal("hide");
 }

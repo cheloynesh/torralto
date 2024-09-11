@@ -15,17 +15,27 @@ class PropertiesController extends Controller
 {
     public function index(){
         // $properties = Propertie::get();
-        $properties = DB::table('Properties')->select('Properties.*','Status.name as statName','Status.id as statId','color')
-            ->join('Status','fk_status','=','Status.id')
-            ->whereNull('Properties.deleted_at')->get();
         $profile = User::findProfile();
-        $perm = Permission::permView($profile,6);
-        $perm_btn =Permission::permBtns($profile,6);
+        $perm = Permission::permView($profile,32);
+        $perm_btn =Permission::permBtns($profile,32);
+        $user = User::user_id();
         $cmbStatus = Status::select('id','name')
-            ->where("fk_section","32")
-            ->pluck('name','id');
+        ->where("fk_section","32")
+        ->pluck('name','id');
         // dd($perm_btn);
         $agents = User::select('id', DB::raw('CONCAT(name," ",firstname) AS name'))->where("fk_profile","12")->pluck('name','id');
+        if($profile != 12)
+        {
+            $properties = DB::table('Properties')->select('Properties.*','Status.name as statName','Status.id as statId','color')
+                ->join('Status','fk_status','=','Status.id')
+                ->whereNull('Properties.deleted_at')->get();
+        }
+        else
+        {
+            $properties = DB::table('Properties')->select('Properties.*','Status.name as statName','Status.id as statId','color')
+                ->join('Status','fk_status','=','Status.id')
+                ->where('fk_user',$user)->whereNull('Properties.deleted_at')->get();
+        }
 
         if($perm==0)
         {
@@ -33,18 +43,24 @@ class PropertiesController extends Controller
         }
         else
         {
-            return view('admin.properties.properties', compact('properties','perm_btn','agents','cmbStatus'));
+            return view('admin.properties.properties', compact('properties','perm_btn','agents','cmbStatus','profile'));
         }
     }
 
     public function store(Request $request)
     {
         // dd($request->front);
+        $profile = User::findProfile();
+        $user = User::user_id();
+
         $properties = new Propertie;
         $properties->name = $request->name;
         $properties->sale_price = $request->sale_price;
         $properties->rent_price = $request->rent_price;
-        $properties->fk_user = $request->fk_user;
+        if($profile != 12)
+            $properties->fk_user = $request->fk_user;
+        else
+            $properties->fk_user = $user;
         $properties->owner = $request->owner;
         $properties->fk_status = $request->fk_status;
         $properties->street = $request->street;
@@ -69,7 +85,6 @@ class PropertiesController extends Controller
         $properties->fee = $request->fee;
         $properties->save();
 
-        $profile = User::findProfile();
         $perm_btn =Permission::permBtns($profile,32);
         $propertie = $this->ReturnData($profile);
 
@@ -79,11 +94,17 @@ class PropertiesController extends Controller
     public function update(Request $request)
     {
         // dd($request->all());
+        $profile = User::findProfile();
+        $user = User::user_id();
+
         $properties = Propertie::where('id',$request->id)->first();
         $properties->name = $request->name;
         $properties->sale_price = $request->sale_price;
         $properties->rent_price = $request->rent_price;
-        $properties->fk_user = $request->fk_user;
+        if($profile != 12)
+            $properties->fk_user = $request->fk_user;
+        else
+            $properties->fk_user = $user;
         $properties->owner = $request->owner;
         $properties->street = $request->street;
         $properties->e_num = $request->e_num;
@@ -107,7 +128,6 @@ class PropertiesController extends Controller
         $properties->fee = $request->fee;
         $properties->save();
 
-        $profile = User::findProfile();
         $perm_btn =Permission::permBtns($profile,32);
         $propertie = $this->ReturnData($profile);
 
@@ -146,9 +166,21 @@ class PropertiesController extends Controller
 
     public function ReturnData($profile)
     {
-        $properties = DB::table('Properties')->select('Properties.*','Status.name as statName','Status.id as statId','color')
-            ->join('Status','fk_status','=','Status.id')
-            ->whereNull('Properties.deleted_at')->get();
+        $profile = User::findProfile();
+        $user = User::user_id();
+
+        if($profile != 12)
+        {
+            $properties = DB::table('Properties')->select('Properties.*','Status.name as statName','Status.id as statId','color')
+                ->join('Status','fk_status','=','Status.id')
+                ->whereNull('Properties.deleted_at')->get();
+        }
+        else
+        {
+            $properties = DB::table('Properties')->select('Properties.*','Status.name as statName','Status.id as statId','color')
+                ->join('Status','fk_status','=','Status.id')
+                ->where('fk_user',$user)->whereNull('Properties.deleted_at')->get();
+        }
 
         return $properties;
     }

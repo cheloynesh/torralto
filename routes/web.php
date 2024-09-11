@@ -68,5 +68,6 @@ Route::get('admin/properties/properties/GetUbi/{id}','PropertiesController@GetUb
 // agenda
 Route::resource('process/agenda/agenda', 'AgendaController');
 Route::get('process/agenda/agenda/GetInfo/{id}','AgendaController@GetInfo')->name('agenda.GetInfo');
+Route::get('process/agenda/agenda/GetInfoClient/{id}','AgendaController@GetInfoClient')->name('agenda.GetInfoClient');
 Route::get('process/agenda/agenda/GetinfoStatus/{id}','AgendaController@GetinfoStatus')->name('agenda.GetinfoStatus');
 Route::post('process/agenda/agenda/updateStatus', 'AgendaController@updateStatus')->name('agenda.updateStatus');

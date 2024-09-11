@@ -5,15 +5,26 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Client;
 use App\Permission;
+use App\Propertie;
 use App\User;
+use DB;
 
 class ClientsController extends Controller
 {
     public function index(){
         $clients = Client::get();
         $profile = User::findProfile();
+        $user = User::user_id();
         $perm = Permission::permView($profile,5);
         $perm_btn =Permission::permBtns($profile,5);
+        $properties = DB::table('Properties')->select('Properties.*','Status.name as statName','Status.id as statId','color')
+            ->join('Status','fk_status','=','Status.id')
+            ->whereNull('Properties.deleted_at')->get();
+
+        if($profile != 12)
+            $clients = Client::get();
+        else
+            $clients = Client::where("fk_user",$user)->get();
         // dd($clients);
         if($perm==0)
         {
@@ -21,21 +32,24 @@ class ClientsController extends Controller
         }
         else
         {
-            return view('admin.client.clients', compact('clients','perm_btn'));
+            return view('admin.client.clients', compact('clients','perm_btn','properties'));
         }
     }
 
     public function GetInfo($id)
     {
+        $propertie = null;
         $client = Client::where('id',$id)->first();
-        // dd($client);
-        return response()->json(['status'=>true, "data"=>$client]);
+        if($client->propertie_pref != 0)
+            $propertie = Propertie::select('id','name')->where('id',$client->propertie_pref)->first();
+        return response()->json(['status'=>true, "data"=>$client, "propertie"=>$propertie]);
 
     }
 
     public function store(Request $request)
     {
         // dd($request->all());
+        $user = User::user_id();
         $client = new Client;
         $client->name = $request->name;
         $client->firstname = $request->firstname;
@@ -45,6 +59,7 @@ class ClientsController extends Controller
         $client->name_contact = $request->name_contact;
         $client->phone_contact = $request->phone_contact;
         $client->status = $request->status;
+        $client->fk_user = $user;
         $client->save();
         return response()->json(["status"=>true, "message"=>"Persona Física Creada"]);
     }
@@ -82,7 +97,8 @@ class ClientsController extends Controller
         $client = Client::where('id',$request->id)
         ->update(['levels'=>$request->levels, 'parking'=>$request->parking,'rooms'=>$request->rooms,
             'full_rest'=>$request->full_rest,'half_rest'=>$request->half_rest,
-            'min_price'=>$request->min_price,'max_price'=>$request->max_price]);
+            'min_price'=>$request->min_price,'max_price'=>$request->max_price,
+            'propertie_pref'=>$request->propertie_pref]);
         return response()->json(['status'=>true, 'message'=>"Preferencias Actualizadas"]);
     }
 

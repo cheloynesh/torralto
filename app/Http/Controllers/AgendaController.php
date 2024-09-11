@@ -9,6 +9,7 @@ use App\Permission;
 use App\Client;
 use App\Status;
 use App\Agenda;
+use App\Propertie;
 use DB;
 
 class AgendaController extends Controller
@@ -76,7 +77,7 @@ class AgendaController extends Controller
         $status = Agenda::where('id',$request->id)->first();
         // dd($status);
         $status->fk_status = $request->status;
-        // $status->commentary = $request->commentary;
+        $status->commentary = $request->commentary;
         $status->save();
 
         $profile = User::findProfile();
@@ -130,5 +131,15 @@ class AgendaController extends Controller
         $dates = $this->ReturnData($profile);
 
         return response()->json(['status'=>true, "message"=>"Propiedad eliminada", "dates" => $dates, "profile" => $profile, "permission" => $perm_btn]);
+    }
+
+    public function GetInfoClient($id)
+    {
+        $propertie = null;
+        $client = Client::where('id',$id)->first();
+        if($client->propertie_pref != 0)
+            $propertie = Propertie::select('id','name')->where('id',$client->propertie_pref)->first();
+        return response()->json(['status'=>true, "data"=>$client, "propertie"=>$propertie]);
+
     }
 }

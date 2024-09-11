@@ -63,28 +63,42 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="">Asesor</label>
-                                                    <select name="consultant" id="consultant" class="form-select">
-                                                        <option hidden selected value="">Selecciona una opción</option>
-                                                        @foreach ($agents as $id => $agent)
-                                                            <option value='{{ $id }}'>{{ $agent }}</option>
-                                                        @endforeach
-                                                    </select>
+                                            @if ($profile != 12)
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="">Asesor</label>
+                                                        <select name="consultant" id="consultant" class="form-select">
+                                                            <option hidden selected value="">Selecciona una opción</option>
+                                                            @foreach ($agents as $id => $agent)
+                                                                <option value='{{ $id }}'>{{ $agent }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="">Tipo:</label>
-                                                    <select name="selectNewStatus" id="selectNewStatus" class="form-select">
-                                                        <option hidden selected value="">Selecciona una opción</option>
-                                                        @foreach ($cmbStatus as $id => $status)
-                                                            <option value='{{ $id }}'>{{ $status }}</option>
-                                                        @endforeach
-                                                    </select>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="">Tipo:</label>
+                                                        <select name="selectNewStatus" id="selectNewStatus" class="form-select">
+                                                            <option hidden selected value="">Selecciona una opción</option>
+                                                            @foreach ($cmbStatus as $id => $status)
+                                                                <option value='{{ $id }}'>{{ $status }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            @else
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label for="">Tipo:</label>
+                                                        <select name="selectNewStatus" id="selectNewStatus" class="form-select">
+                                                            <option hidden selected value="">Selecciona una opción</option>
+                                                            @foreach ($cmbStatus as $id => $status)
+                                                                <option value='{{ $id }}'>{{ $status }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            @endif
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-6">

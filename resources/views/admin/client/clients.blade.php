@@ -123,12 +123,72 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row align-items-center">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label for="">Propiedad</label>
+                                            <input type="text" id="propertie_edit" class="form-control" disabled placeholder="Propiedad">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        @if ($perm_btn['modify']==1)
+                                            <button type="button" class="btn btn-primary" style="height: 60;" onclick="abrirmodal('#modalSrcPropertie','1')">Cambiar</button>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" onclick="cancelar('#preferencesModal')" class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
                         <button type="button" onclick="savePreferences()" class="btn btn-primary">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- fin modal --}}
+
+        {{-- inicia modal --}}
+        <div id="modalSrcPropertie" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="gridModalLabek">Buscar Propiedad</h4>
+                        <button type="button" class="close" onclick="cancelar('#modalSrcPropertie')"><span aria-hidden="true">&times;</span></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="container-fluid bd-example-row">
+                            <div class="table-responsive" style="margin-bottom: 10px; max-width: 100%; margin: auto;">
+                                <table class="table table-striped table-hover text-center" style="width:100%" id="srcClient">
+                                    <thead>
+                                        <th class="text-center">Nombre</th>
+                                        <th class="text-center">Tipo</th>
+                                        <th class="text-center">Accion</th>
+
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($properties as $propertie)
+                                            <tr id="{{$propertie->id}}">
+                                                <td>{{$propertie->name}}</td>
+                                                @switch($propertie->type)
+                                                    @case('house_card') <td>Casa</td> @break
+                                                    @case('dept_card') <td>Departamento</td> @break
+                                                    @case('terrain_card') <td>Terreno</td> @break
+                                                    @case('office_card') <td>Oficinas</td> @break
+                                                    @case('wareh_card') <td>Bodega</td> @break
+                                                    @case('local_card') <td>Local Comercial</td> @break
+                                                @endswitch
+                                                <td>
+                                                    <button type="button" class="btn btn-primary" onclick="obtenerid({{$propertie->id}},'{{$propertie->name}}')">Seleccionar</button>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

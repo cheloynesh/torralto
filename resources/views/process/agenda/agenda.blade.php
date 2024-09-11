@@ -23,7 +23,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="">Cliente</label>
-                                            <select name="selectClient" id="selectClient" class="form-select">
+                                            <select name="selectClient" id="selectClient" class="form-select" onchange="selectPropertie('')">
                                                 <option hidden selected value="">Selecciona una opción</option>
                                                 @foreach ($clients as $client)
                                                     <option value='{{ $client->id }}'>{{ $client->cname }}</option>

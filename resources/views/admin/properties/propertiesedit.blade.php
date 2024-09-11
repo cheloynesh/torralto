@@ -47,23 +47,32 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="">Propietario</label>
-                                                <input type="text" id="owner1" name="owner1" class="form-control" placeholder="Propietario">
+                                        @if ($profile != 12)
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="">Propietario</label>
+                                                    <input type="text" id="owner1" name="owner1" class="form-control" placeholder="Propietario">
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="">Asesor</label>
-                                                <select name="consultant1" id="consultant1" class="form-select">
-                                                    <option hidden selected value="">Selecciona una opción</option>
-                                                    @foreach ($agents as $id => $agent)
-                                                        <option value='{{ $id }}'>{{ $agent }}</option>
-                                                    @endforeach
-                                                </select>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="">Asesor</label>
+                                                    <select name="consultant1" id="consultant1" class="form-select">
+                                                        <option hidden selected value="">Selecciona una opción</option>
+                                                        @foreach ($agents as $id => $agent)
+                                                            <option value='{{ $id }}'>{{ $agent }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
+                                        @else
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="">Propietario</label>
+                                                    <input type="text" id="owner1" name="owner1" class="form-control" placeholder="Propietario">
+                                                </div>
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-6">

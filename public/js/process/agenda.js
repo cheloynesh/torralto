@@ -227,7 +227,7 @@ function actualizarEstatus()
         'id':id_propertie,
         "_token": $("meta[name='csrf-token']").attr("content"),
         'status':status,
-        // "commentary":commentary
+        "commentary":commentary
     };
     jQuery.ajax({
         url:route,
@@ -273,4 +273,34 @@ function eliminarCita(id)
             })
         },
         function(){});
+}
+
+function selectPropertie(typ)
+{
+    id = $("#selectClient").val();
+
+    var route = baseUrl + '/GetInfoClient/'+id;
+    // alert(route);
+    jQuery.ajax({
+        url:route,
+        type:'get',
+        dataType:'json',
+        success:function(result)
+        {
+            if(result.propertie != null)
+            {
+                $("#propertie_edit" + typ).val(result.propertie.name);
+                id_propertie = result.propertie.id;
+            }
+            else
+            {
+                idPropertie = 0;
+                $("#propertie_edit" + typ).val("");
+            }
+        },
+        error:function(result,error,errorTrown)
+        {
+            alertify.error(errorTrown);
+        }
+    })
 }

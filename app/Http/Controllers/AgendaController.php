@@ -10,6 +10,7 @@ use App\Client;
 use App\Status;
 use App\Agenda;
 use App\Propertie;
+use App\PostalCode;
 use DB;
 
 class AgendaController extends Controller
@@ -41,8 +42,19 @@ class AgendaController extends Controller
         }
         else
         {
-            return view('process.agenda.agenda', compact('profiles','perm_btn','clients','properties','agents','dates','cmbStatus'));
+            return view('process.agenda.agenda', compact('profiles','perm_btn','clients','properties','agents','dates','cmbStatus','profile'));
         }
+    }
+
+    public function GetInfoPropertie($id)
+    {
+        $propertie = DB::table('Properties')->select('*')
+            ->join('PostalCode','fk_pc','=','PostalCode.id')
+            ->where('Properties.id',$id)->first();
+
+        $ubi = PostalCode::where('pc',$propertie->pc)->orderBy("suburb")->get();
+        // dd($profile);
+        return response()->json(['status'=>true, "data"=>$propertie, "suburbs"=>$ubi]);
     }
 
     public function returnData($profile)

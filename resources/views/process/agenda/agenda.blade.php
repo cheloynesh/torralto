@@ -13,7 +13,7 @@
 
                     <div class="modal-header">
                         <h4 class="modal-title" id="gridModalLabek">Registro de cita</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" onclick="cancelar('#myModal')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
 
                     <div class="modal-body">
@@ -66,7 +66,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-secundary" onclick="cancelar('#myModal')">Cancelar</button>
                         <button type="button" onclick="guardarCita()" class="btn btn-primary">Guardar</button>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
 
                     <div class="modal-header">
                         <h4 class="modal-title" id="gridModalLabek">Registro de cita</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" onclick="cancelar('#myModalEdit')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
 
                     <div class="modal-body">
@@ -133,7 +133,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secundary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-secundary" onclick="cancelar('#myModalEdit')">Cancelar</button>
                         @if ($perm_btn['modify']==1)
                             <button type="button" onclick="actualizarCita()" class="btn btn-primary">Guardar</button>
                         @endif
@@ -190,6 +190,7 @@
 
         {{-- fin modal --}}
         @include('status')
+        @include('process.agenda.propertieview')
         {{-- Inicia pantalla de inicio --}}
         <div class="bd-example bd-example-padded-bottom">
             @if ($perm_btn['addition']==1)
@@ -216,7 +217,7 @@
                             <td>{{$date->appointment_date}}</td>
                             <td>{{$date->uname}}</td>
                             <td>{{$date->cname}}</td>
-                            <td>{{$date->pname}}</td>
+                            <td><button type="button" class="btn btn-primary" onclick="verPropiedad({{$date->pid}})">{{$date->pname}}</button></td>
                             <td>
                                 <button class="btn btn-info" style="background-color: #{{$date->color}}; border-color: #{{$date->color}}" onclick="opcionesEstatus({{$date->id}},{{$date->statId}})">{{$date->statName}}</button>
                             </td>

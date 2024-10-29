@@ -65,17 +65,19 @@ function RefreshTable(data,profile,permission)
     var btnStat = '';
     var btnEdit = '';
     var btnTrash = '';
+    var btnPropertie = '';
     table.clear();
 
     data.forEach( function(valor, indice, array) {
+        btnPropertie = '<button type="button" class="btn btn-primary" onclick="verPropiedad('+valor.pid+')">'+valor.pname+'</button>';
         btnStat = '<button class="btn btn-info" style="background-color: #'+valor.color+'; border-color: #'+valor.color+'" onclick="opcionesEstatus('+valor.id+','+valor.statId+')">'+valor.statName+'</button>';
         btnEdit = '<button href="#|" class="btn btn-warning" onclick="editarCita('+valor.id+')" ><i class="fa fa-edit"></i></button>';
         btnTrash = '<button href="#|" class="btn btn-danger" onclick="eliminarCita('+valor.id+')"><i class="fa fa-trash"></i></button>';
 
         if(permission["erase"] == 1)
-            table.row.add([valor.appointment_date,valor.uname,valor.cname,valor.pname,btnStat,btnEdit+" "+btnTrash]);
+            table.row.add([valor.appointment_date,valor.uname,valor.cname,btnPropertie,btnStat,btnEdit+" "+btnTrash]);
         else
-            table.row.add([valor.appointment_date,valor.uname,valor.cname,valor.pname,btnStat,btnEdit]);
+            table.row.add([valor.appointment_date,valor.uname,valor.cname,btnPropertie,btnStat,btnEdit]);
     });
     table.draw(false);
 }
@@ -303,4 +305,194 @@ function selectPropertie(typ)
             alertify.error(errorTrown);
         }
     })
+}
+
+function verPropiedad(id)
+{
+    idupdate=id;
+
+    var route = baseUrl + '/GetInfoPropertie/'+id;
+    // alert(route);
+    jQuery.ajax({
+        url:route,
+        type:'get',
+        dataType:'json',
+        success:function(result)
+        {
+            var auxtype = '';
+            actualizarSelect(result.suburbs,"#selectSuburb2");
+            // alert(result.data.name);
+            $("#name2").val(result.data.name);
+            $("#owner2").val(result.data.owner);
+            $("#consultantp2").val(result.data.fk_user);
+            result.data.sale_price != null ? $("#salePrice2").val(parseFloat(result.data.sale_price).toLocaleString('en-US')) : $("#salePrice2").val("");
+            result.data.rent_price != null ? $("#rentPrice2").val(parseFloat(result.data.rent_price).toLocaleString('en-US')) : $("#rentPrice2").val("");
+
+            $("#street2").val(result.data.street);
+            $("#e_num2").val(result.data.e_num);
+            $("#i_num2").val(result.data.i_num);
+            $("#pc2").val(result.data.pc);
+
+            $("#selectSuburb2").val(result.data.fk_pc);
+            $("#country2").val(result.data.country);
+            $("#state2").val(result.data.state);
+            $("#city2").val(result.data.city);
+
+            document.getElementById("viewMaps").href = result.data.maps;
+
+            $("#selectPropertieType2").val(result.data.type);
+
+            switch(result.data.type)
+            {
+                case 'house_card': auxtype = 'H'; break;
+                case 'dept_card': auxtype = 'D'; break;
+                case 'terrain_card': auxtype = 'T'; break;
+                case 'office_card': auxtype = 'O'; break;
+                case 'wareh_card': auxtype = 'W'; break;
+                case 'local_card': auxtype = 'L'; break;
+            }
+
+            $("#levels" + auxtype + '2').val(result.data.levels);
+            $("#parking" + auxtype + '2').val(result.data.parking);
+            $("#rooms" + auxtype + '2').val(result.data.rooms);
+            $("#fullRest" + auxtype + '2').val(result.data.full_rest);
+            $("#halfRest" + auxtype + '2').val(result.data.half_rest);
+            $("#antiquity" + auxtype + '2').val(result.data.antiquity);
+            result.data.terrain != null ? $("#terrain" + auxtype + '2').val(parseFloat(result.data.terrain).toLocaleString('en-US')) : $("#terrain" + auxtype + '2').val('');
+            result.data.construction != null ? $("#construction" + auxtype + '2').val(parseFloat(result.data.construction).toLocaleString('en-US')) : $("#construction" + auxtype + '2').val('');
+            result.data.front != null ? $("#front" + auxtype + '2').val(parseFloat(result.data.front).toLocaleString('en-US')) : $("#front" + auxtype + '2').val('');
+            result.data.side != null ? $("#side" + auxtype + '2').val(parseFloat(result.data.side).toLocaleString('en-US')) : $("#side" + auxtype + '2').val('');
+            $("#privates" + auxtype + '2').val(result.data.privates);
+            $("#office" + auxtype + '2').val(result.data.office);
+            $("#level" + auxtype + '2').val(result.data.level);
+
+            setCondominium(auxtype,result.data.extras,result.data.fee,'2');
+
+            document.getElementById("house_card2").style.display = "none";
+            document.getElementById("dept_card2").style.display = "none";
+            document.getElementById("terrain_card2").style.display = "none";
+            document.getElementById("office_card2").style.display = "none";
+            document.getElementById("wareh_card2").style.display = "none";
+            document.getElementById("local_card2").style.display = "none";
+
+            document.getElementById(result.data.type + '2').style.display = "block";
+
+            $("#myModalViewPropertie").modal('show');
+        },
+        error:function(result,error,errorTrown)
+        {
+            alertify.error(errorTrown);
+        }
+    })
+}
+
+function actualizarSelect(result, select)
+{
+    var assignPlan = $(select);
+
+    $(select).empty();
+    if(result.length == 0 || result == null) assignPlan.append('<option selected  value="0">Seleccione una opción</option>');
+    else assignPlan.append('<option selected hidden value="0">Seleccione una opción</option>');
+    result.forEach( function(valor, indice, array) {
+        assignPlan.append("<option value='" + valor.id + "'>" + valor.suburb + "</option>");
+    });
+}
+
+function setCondominium(type,extras,fee,edit)
+{
+    if(extras != null || fee != 0)
+    {
+        fee != null ? $("#fee" + type + '2').val(parseFloat(fee).toLocaleString('en-US')) : $("#fee" + type + '2').val('');
+
+        extras = extras.split('-');
+        console.log(extras,type);
+
+        switch(type)
+        {
+            case 'H':
+                document.getElementById('onoffCondHome2').disabled = false;
+                $("#onoffCondHome2").bootstrapToggle('on');
+                document.getElementById('onoffCondHome2').disabled = true;
+                document.getElementById("poolH" + edit).checked = parseInt(extras[0]);
+                document.getElementById("gymH" + edit).checked = parseInt(extras[1]);
+                document.getElementById("terraceH" + edit).checked = parseInt(extras[2]);
+                document.getElementById("tankH" + edit).checked = parseInt(extras[3]);
+                document.getElementById("securityH" + edit).checked = parseInt(extras[4]);
+                break;
+            case 'D':
+                document.getElementById('onoffCondDept2').disabled = false;
+                $("#onoffCondDept2").bootstrapToggle('on');
+                document.getElementById('onoffCondDept2').disabled = true;
+                document.getElementById("poolD" + edit).checked = parseInt(extras[0]);
+                document.getElementById("gymD" + edit).checked = parseInt(extras[1]);
+                document.getElementById("terraceD" + edit).checked = parseInt(extras[2]);
+                document.getElementById("liftD" + edit).checked = parseInt(extras[3]);
+                document.getElementById("securityD" + edit).checked = parseInt(extras[4]);
+                break;
+            case 'T':
+                document.getElementById('onoffCondTerr2').disabled = false;
+                $("#onoffCondTerr2").bootstrapToggle('on');
+                document.getElementById('onoffCondTerr2').disabled = true;
+                document.getElementById("poolT" + edit).checked = parseInt(extras[0]);
+                document.getElementById("gymT" + edit).checked = parseInt(extras[1]);
+                document.getElementById("terraceT" + edit).checked = parseInt(extras[2]);
+                document.getElementById("tankT" + edit).checked = parseInt(extras[3]);
+                document.getElementById("securityT" + edit).checked = parseInt(extras[4]);
+                break;
+            case 'O':
+                document.getElementById('onoffCondOffice2').disabled = false;
+                $("#onoffCondOffice2").bootstrapToggle('on');
+                document.getElementById('onoffCondOffice2').disabled = true;
+                document.getElementById("valetO" + edit).checked = parseInt(extras[0]);
+                document.getElementById("meetO" + edit).checked = parseInt(extras[1]);
+                document.getElementById("terraceO" + edit).checked = parseInt(extras[2]);
+                document.getElementById("audienceO" + edit).checked = parseInt(extras[3]);
+                document.getElementById("coffeeO" + edit).checked = parseInt(extras[4]);
+                document.getElementById("receptionO" + edit).checked = parseInt(extras[5]);
+                document.getElementById("airconO" + edit).checked = parseInt(extras[6]);
+                break;
+            case 'W':
+                document.getElementById('onoffCondWareh2').disabled = false;
+                $("#onoffCondWareh2").bootstrapToggle('on');
+                document.getElementById('onoffCondWareh2').disabled = true;
+                document.getElementById("platformW" + edit).checked = parseInt(extras[0]);
+                document.getElementById("yardW" + edit).checked = parseInt(extras[1]);
+                document.getElementById("showerW" + edit).checked = parseInt(extras[2]);
+                document.getElementById("guardhouseW" + edit).checked = parseInt(extras[3]);
+                document.getElementById("circuitW" + edit).checked = parseInt(extras[4]);
+                break;
+            case 'L':
+                document.getElementById('onoffCondLocal2').disabled = false;
+                $("#onoffCondLocal2").bootstrapToggle('on');
+                document.getElementById('onoffCondLocal2').disabled = true;
+                document.getElementById("securityL" + edit).checked = parseInt(extras[0]);
+                break;
+        }
+    }
+    else
+    {
+        $("#onoffCondHome2").bootstrapToggle('off');
+        $("#onoffCondDept2").bootstrapToggle('off');
+        $("#onoffCondTerr2").bootstrapToggle('off');
+        $("#onoffCondOffice2").bootstrapToggle('off');
+        $("#onoffCondWareh2").bootstrapToggle('off');
+        $("#onoffCondLocal2").bootstrapToggle('off');
+    }
+}
+
+function showDivCondominium(onoffH,divH)
+{
+    // alert("hola");
+    var onoff = document.getElementById(onoffH);
+    var checked = onoff.checked;
+    var div = document.getElementById(divH);
+    // alert(checked);
+    if(checked)
+    {
+        div.style.display = "block";
+    }
+    else
+    {
+        div.style.display = "none";
+    }
 }

@@ -62,6 +62,7 @@ class PropertiesController extends Controller
         else
             $properties->fk_user = $user;
         $properties->owner = $request->owner;
+        $properties->maps = $request->maps;
         $properties->fk_status = $request->fk_status;
         $properties->street = $request->street;
         $properties->e_num = $request->e_num;
@@ -106,6 +107,7 @@ class PropertiesController extends Controller
         else
             $properties->fk_user = $user;
         $properties->owner = $request->owner;
+        $properties->maps = $request->maps;
         $properties->street = $request->street;
         $properties->e_num = $request->e_num;
         $properties->i_num = $request->i_num;

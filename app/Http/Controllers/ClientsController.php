@@ -22,9 +22,18 @@ class ClientsController extends Controller
             ->whereNull('Properties.deleted_at')->get();
 
         if($profile != 12)
-            $clients = Client::get();
+            $clients = DB::table('Client')->select(DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")," ",IFNULL(users.lastname, "")) AS usname'),
+                DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(Client.firstname, "")," ",IFNULL(Client.lastname, "")) AS clname'), "Client.email AS email", "Client.cellphone AS cellphone",
+                "Client.created_at as created_at","status", "Client.id AS id")
+                ->join('users','fk_user','=','users.id')
+                ->whereNull('Client.deleted_at')->get();
         else
-            $clients = Client::where("fk_user",$user)->get();
+            $clients = $clients = DB::table('Client')->select(DB::raw('CONCAT(IFNULL(users.name, "")," ",IFNULL(users.firstname, "")," ",IFNULL(users.lastname, "")) AS usname'),
+                DB::raw('CONCAT(IFNULL(Client.name, "")," ",IFNULL(Client.firstname, "")," ",IFNULL(Client.lastname, "")) AS clname'), "Client.email AS email", "Client.cellphone AS cellphone",
+                "Client.created_at as created_at","status", "Client.id AS id")
+                ->join('users','fk_user','=','users.id')
+                ->where("fk_user",$user)
+                ->whereNull('Client.deleted_at')->get();
         // dd($clients);
         if($perm==0)
         {
@@ -32,7 +41,7 @@ class ClientsController extends Controller
         }
         else
         {
-            return view('admin.client.clients', compact('clients','perm_btn','properties'));
+            return view('admin.client.clients', compact('clients','perm_btn','properties','profile'));
         }
     }
 

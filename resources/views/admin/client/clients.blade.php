@@ -211,6 +211,10 @@
                     <th class="text-center">Celular</th>
                     <th class="text-center">Correo</th>
                     <th class="text-center">Tipo</th>
+                    <th class="text-center">Alta</th>
+                    @if ($profile != 12)
+                        <th class="text-center">Asesor</th>
+                    @endif
                     @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
                         <th class="text-center">Opciones</th>
                     @endif
@@ -219,13 +223,17 @@
                 <tbody>
                     @foreach ($clients as $client)
                         <tr id="{{$client->id}}">
-                            <td>{{$client->name}} {{$client->firstname}} {{$client->lastname}}</td>
+                            <td>{{$client->clname}}</td>
                             <td>{{$client->cellphone}}</td>
                             <td>{{$client->email}}</td>
                             @if ($client->status == 0)
                                 <td>Física</td>
                             @else
                                 <td>Moral</td>
+                            @endif
+                            <td>{{$client->created_at}}</td>
+                            @if ($profile != 12)
+                                <td>{{$client->usname}}</td>
                             @endif
                             {{-- <td>{{$client->status}}</td> --}}
                             @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)

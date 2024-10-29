@@ -55,10 +55,16 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="">Propietario</label>
                                                     <input type="text" id="owner" name="owner" class="form-control" placeholder="Propietario">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="">Enlace a maps</label>
+                                                    <input type="text" id="maps" name="maps" class="form-control" placeholder="Enlace a maps">
                                                 </div>
                                             </div>
                                         </div>
@@ -885,6 +891,7 @@
         </div>
         {{-- fin modal| --}}
         @include('admin.properties.propertiesedit')
+        @include('process.agenda.propertieview')
         @include('status')
         {{-- Inicia pantalla de inicio --}}
         <div class="bd-example bd-example-padded-bottom">
@@ -904,9 +911,7 @@
                     <th class="text-center">Estacionamientos</th>
                     <th class="text-center">Tipo</th>
                     <th class="text-center">Estatus</th>
-                    @if ($perm_btn['modify']==1 || $perm_btn['erase']==1)
-                        <th class="text-center">Opciones</th>
-                    @endif
+                    <th class="text-center">Opciones</th>
                 </thead>
 
                 <tbody>
@@ -929,16 +934,17 @@
                             <td>
                                 <button class="btn btn-info" style="background-color: #{{$propertie->color}}; border-color: #{{$propertie->color}}" onclick="opcionesEstatus({{$propertie->id}},{{$propertie->statId}})">{{$propertie->statName}}</button>
                             </td>
-                            @if ($perm_btn['erase']==1 || $perm_btn['modify']==1)
-                                <td>
+                            <td>
+                                <button href="#|" class="btn btn-success" onclick="verPropiedad({{$propertie->id}})" ><i class="fas fa-eye"></i></button>
+                                @if ($perm_btn['erase']==1 || $perm_btn['modify']==1)
                                     @if ($perm_btn['modify']==1)
                                         <button href="#|" class="btn btn-warning" onclick="editarPropiedad({{$propertie->id}})" ><i class="fa fa-edit"></i></button>
                                     @endif
                                     @if ($perm_btn['erase']==1)
                                         <button href="#|" class="btn btn-danger" onclick="eliminarPropiedad({{$propertie->id}})"><i class="fa fa-trash"></i></button>
                                     @endif
-                                </td>
-                            @endif
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
